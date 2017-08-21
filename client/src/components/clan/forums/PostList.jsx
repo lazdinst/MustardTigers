@@ -12,27 +12,26 @@ import { Grid, Row, Col, ListGroup, Table } from 'react-bootstrap';
 class PostList extends React.Component {
   constructor (props) {
     super(props);
-    this.state = {
-      forum: {},
-    };
-  }
-
-  componentWillMount () {
-    this.setState({
-      forum: this.props.forum
-    });
   }
 
   render() {
-    var posts = this.state.forum.posts.map((post, i) => {
-      return <PostListEntry clan={this.props.clan} post={post} forum={this.state.forum} key={i} />;
-    });
-
-    return (
-      <tbody>
-        {posts}
-      </tbody>
-    );
+    if (this.props.forum.posts) {
+      // var posts = this.props.forum.posts.map((post, i) => {
+      //   return <PostListEntry clan={this.props.clan} post={post} forum={this.props.forum} key={i} />;
+      // });
+      return (
+        <tbody>
+          
+          IM here put posts back before oyu forget
+        </tbody>
+      );
+    } else {
+      return (
+        <tbody>
+          No Posts on this forum. Submit a new post.
+        </tbody>
+      );
+    }
   }
 }
 
