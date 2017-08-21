@@ -14,15 +14,22 @@ class PostList extends React.Component {
     super(props);
   }
 
+  componentDidMount() {
+    console.log(this.props.posts);
+    // let posts = this.props.posts.map((post, i) => {
+    //   return <PostListEntry clan={this.props.clan} post={post} forum={this.props.forum} key={i} />;
+    // });
+    //console.log(posts);
+  }
+
   render() {
-    if (this.props.forum.posts) {
-      // var posts = this.props.forum.posts.map((post, i) => {
-      //   return <PostListEntry clan={this.props.clan} post={post} forum={this.props.forum} key={i} />;
-      // });
+    if (this.props.posts.length) {
+      let posts = this.props.posts.map((post, i) => {
+        return <PostListEntry clan={this.props.clan} post={post} forum={this.props.forum} key={i} />;
+      });
       return (
         <tbody>
-          
-          IM here put posts back before oyu forget
+          {posts}
         </tbody>
       );
     } else {

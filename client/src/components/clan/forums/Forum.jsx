@@ -19,20 +19,30 @@ class Forum extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-      posts: {}
+      posts: []
     };
   }
-
-  getForumInfo(forums) {
-    //Matches forumName to Route ForumName
-    return forums.filter((forum) => {
-      return forum.id === this.props.match.params.id;
-    });
-  }
   
+  // fetchPosts(forumId) {
+  //   axios.get(`/api/forums/${forumId}/posts`)
+  //     .then((res) => {
+  //       let posts = res.data;
+  //       console.log('Client: Success! Getting Posts', posts);
+  //       this.setState({
+  //         posts: posts
+  //       });
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }
+
+  componentDidMount() {
+    var forumId = parseInt(this.props.match.params.id);
+    this.props.fetchPosts(forumId);
+  }
+
   render() {
-    console.log('render forums', this.props.forums)
-    console.log('render params id', this.props.match.params.id);
     if (this.props.forums) {
       var forumId = parseInt(this.props.match.params.id);
       var forum = this.props.forums.filter((forum) => { return forum.id === forumId; });
@@ -54,7 +64,7 @@ class Forum extends React.Component {
                   <th colSpan="2">Forum Posts</th>
                 </tr>
               </thead>
-              <PostList clan={this.props.clan} forum={forum}/>
+              <PostList clan={this.props.clan} posts={this.props.posts} forum={forum[0]}/>
             </Table>
           </Row>
         </Grid>

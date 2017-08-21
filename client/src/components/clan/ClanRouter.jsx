@@ -107,6 +107,7 @@ class ClanRouter extends React.Component {
 
   componentWillMount() {
     this.fetchForums();
+    //this.fetchPosts(1);
   }
 
   render() {

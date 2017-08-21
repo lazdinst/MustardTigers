@@ -24,6 +24,9 @@ import { Grid, Row, Col, ListGroup, Table } from 'react-bootstrap';
 class ForumRouter extends React.Component {
   constructor (props) {
     super(props);
+    this.state = {
+      posts: []
+    };
   }
 
   // updateForums(forums) {
@@ -45,12 +48,18 @@ class ForumRouter extends React.Component {
     this.props.history.push(`/clan/forums/${this.state.currentForum.name}/${postID}`);
   }
 
-  componentWillMount () {
-
-  }
-
-  componentDidMount () {
-
+  fetchPosts(forumId) {
+    axios.get(`/api/forums/${forumId}/posts`)
+      .then((res) => {
+        let posts = res.data;
+        console.log('Client: Success! Getting Posts', posts);
+        this.setState({
+          posts: posts
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   render() {
@@ -76,12 +85,12 @@ class ForumRouter extends React.Component {
           {/* Forum Route /clan/forums/forumid */}
           <Route
             exact path={`/${this.props.clan.id}/forums/:id`}
-            render={(props) => <Forum {...props} clan={this.props.clan} forums={this.props.forums}/>}
+            render={(props) => <Forum {...props} clan={this.props.clan} posts={this.state.posts} forums={this.props.forums} fetchPosts={this.fetchPosts.bind(this)}/>}
           />
           {/* NewPostComment Route /clan/forums/forumid/postid */}
           <Route 
             exact path={`/${this.props.clan.id}/forums/:id/:id`}
-            render={(props) => <Post {...props} clan={this.props.clan} forums={this.props.forums}/>}
+            render={(props) => <Post {...props} clan={this.props.clan} posts={this.state.posts} forums={this.props.forums} fetchPosts={this.fetchPosts.bind(this)}/>}
           />
           {/* NewPostComment Route /clan/forums/forumid/new */}
           <Route
